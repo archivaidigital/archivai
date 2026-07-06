@@ -4,7 +4,7 @@
 [![Norma](https://img.shields.io/badge/norma-ISO%2FIEC%2027037-green)](https://www.iso.org)
 [![Escala](https://img.shields.io/badge/escala-ENFSI-orange)](https://enfsi.eu)
 [![Licença](https://img.shields.io/badge/licença-proprietária-red)](#licença)
-[![GitHub](https://img.shields.io/badge/GitHub-arquivaidigital%2Farchivai-black?logo=github)](https://github.com/arquivaidigital/archivai)
+[![GitHub](https://img.shields.io/badge/GitHub-arquivaidigital%2Farchivai-black?logo=github)](https://github.com/archivaidigital/archivai)
 
 > Repositório público de documentação do ArchivAI. O código-fonte da plataforma é proprietário e não está disponível neste repositório.
 
@@ -126,6 +126,6 @@ Este projeto é objeto de estudo no artigo científico:
 
 O código-fonte do ArchivAI é **proprietário**. Este repositório contém exclusivamente documentação pública. Todos os direitos reservados © 2024–2026 Marcelo Miguel Alves.
 
-Para acesso à plataforma: [archivai.cloud](https://archivai.cloud)
+[ArchivAI | Perícia e Integridade Digital](https://www.archivai.cloud/#como-funciona)  
 Para contato: marmalves@gmail.com  
-Repositório: https://github.com/arquivaidigital/archivai
+Repositório: https://github.com/archivaidigital/archivai
