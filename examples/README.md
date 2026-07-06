@@ -14,7 +14,7 @@ Todos os PDFs utilizados nestes exemplos são documentos públicos, obtidos de f
 | `exemplo_irregular/` | A publicar | ⚠️ IRREGULAR | PDF com edição incremental detectada |
 | `exemplo_ameaca/` | A publicar | 🚨 AMEAÇA | PDF com JavaScript embutido (amostra educacional) |
 
-> **Nota:** Os exemplos serão publicados após a realização das perícias pós-estabilização da plataforma, previstas para o segundo semestre de 2026.
+> **Nota:** Os exemplos serão publicados após a conclusão das perícias de validação da plataforma, realizadas com documentos públicos selecionados.
 
 ## Fontes sugeridas para PDFs públicos
 
