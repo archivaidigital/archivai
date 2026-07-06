@@ -128,4 +128,5 @@ O código-fonte do ArchivAI é **proprietário**. Este repositório contém excl
 
 [ArchivAI | Perícia e Integridade Digital](https://www.archivai.cloud/#como-funciona)  
 Para contato: marmalves@gmail.com  
-Repositório: https://github.com/archivaidigital/archivai
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-marmalves-blue?logo=linkedin)](https://www.linkedin.com/in/marmalves/)  
+[![YouTube](https://img.shields.io/badge/YouTube-ArchivAI-red?logo=youtube)](https://www.youtube.com/channel/UCYWJ9jDHDcFLXBspQGh0xAw)
