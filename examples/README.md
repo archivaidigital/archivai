@@ -64,7 +64,6 @@ Publicado em 2013, antes da vigência das normas ISO de acessibilidade amplament
 
 **Sobre os selos:** a ausência de conformidade ISO não implica adulteração ou comprometimento — reflete escolhas técnicas de produção. O selo BRONZE indica documento íntegro com falhas de conformidade normativa, enquanto IRREGULAR e AMEAÇA indicam evidências de comprometimento estrutural.
 
-**Campo `conclusao_pericial` vazio:** identificado como item de backlog técnico — a lógica de geração da conclusão narrativa está em revisão na versão atual da plataforma.
 
 ---
 
