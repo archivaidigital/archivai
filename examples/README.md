@@ -17,7 +17,6 @@ Perícias forenses realizadas pelo ArchivAI em documentos PDF públicos de domí
 | [CLT — Consolidação das Leis do Trabalho 4ª ed.](https://sindhosfilvp.com.br/wp-content/uploads/2024/06/consolidacao_leis_trabalho_4ed-atualizada.pdf) | Câmara dos Deputados | — | 🥉 BRONZE | `a092c9ac` |
 | [MoReq-Jus 2ª edição — CNJ](https://www.cnj.jus.br/wp-content/uploads/2023/10/moreq-jus-2a-edicao.pdf) | CNJ | — | 🥉 BRONZE | `ba818e67` |
 | [Constituição Federal 88 — EC91/2016 (Senado)](https://www2.senado.leg.br/bdsf/bitstream/handle/id/518231/CF88_Livro_EC91_2016.pdf) | Senado Federal | — | 🥉 BRONZE | `90f6a616` |
-| [Constituição Federal 88 — 69ª edição (Câmara)](https://www.camara.leg.br) | Câmara dos Deputados | 298 | 🥉 BRONZE | `bb4d1368` |
 | [Lei Áurea — Lei 3.353/1888](http://www12.senado.leg.br/institucional/arquivo/documentos-apenas/lei-aurea) | Senado Federal | — | 🥉 BRONZE | `bb2fff39` |
 
 ---
