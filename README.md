@@ -2,9 +2,9 @@
 
 [![Plataforma](https://img.shields.io/badge/plataforma-archivai.cloud-blue)](https://archivai.cloud)
 [![Norma](https://img.shields.io/badge/norma-ISO%2FIEC%2027037-green)](https://www.iso.org)
-[![Escala](https://img.shields.io/badge/escala-ENFSI-orange)](https://enfsi.eu)
+[![Linguagem](https://img.shields.io/badge/linguagem-ENFSI-orange)](https://enfsi.eu)
 [![Licença](https://img.shields.io/badge/licença-proprietária-red)](#licença)
-[![GitHub](https://img.shields.io/badge/GitHub-arquivaidigital%2Farchivai-black?logo=github)](https://github.com/archivaidigital/archivai)
+[![GitHub](https://img.shields.io/badge/GitHub-archivaidigital%2Farchivai-black?logo=github)](https://github.com/archivaidigital/archivai)
 
 > Repositório público de documentação do ArchivAI. O código-fonte da plataforma é proprietário e não está disponível neste repositório.
 
@@ -14,92 +14,89 @@
 
 O **ArchivAI** é uma plataforma brasileira de perícia forense digital, disponível em [archivai.cloud](https://archivai.cloud), voltada a profissionais que atuam com documentos no formato PDF em contexto probatório ou de conformidade — peritos digitais, assistentes técnicos, advogados e cartórios.
 
-A plataforma automatiza a análise estática forense de documentos PDF, produzindo **pareceres técnicos com cadeia de custódia auditável**, em conformidade com:
+A plataforma automatiza a análise estática forense de documentos PDF e emite um **Parecer Técnico** com registro de integridade por hash SHA-256 e preservação do arquivo original. O desenho do processo toma como referência:
 
 - **ISO/IEC 27037** — Identificação, coleta, aquisição e preservação de evidências digitais
 - **ISO/IEC 27042** — Análise e interpretação de evidências digitais
 - **NIST SP 800-86** — Integração de técnicas forenses em resposta a incidentes
-- **Escala verbal ENFSI** — Comunicação padronizada de conclusões periciais
-- **Art. 465, §1º do CPC** — Fundamentação técnica de laudos e pareceres periciais
+- **ENFSI** — Linguagem de conclusões periciais: plausibilidade para achados positivos, linguagem categórica para achados negativos
 
 ---
 
 ## O que o ArchivAI faz?
 
-Para cada documento PDF submetido, o pipeline forense executa em sequência:
+Para cada documento PDF submetido, o pipeline forense executa, nesta ordem:
 
 | Etapa | Módulo | O que verifica |
 |---|---|---|
-| 1 | **Hash SHA-256** | Identidade imutável do documento — âncora da cadeia de custódia |
-| 2 | **VirusTotal** | Reputação do hash em +70 motores antivírus (por hash, sem envio do arquivo) |
-| 3 | **DetectaJS** | Presença de elementos ativos: `/JavaScript`, `/OpenAction`, `/Launch`, `/EmbeddedFile` |
-| 4 | **peepdf-3** | Análise estrutural binária completa — inspeciona objetos e streams descomprimidos |
-| 5 | **veraPDF** | Conformidade com ISO 19005 (PDF/A) e ISO 14289 (PDF/UA) |
-| 6 | **pyHanko** | Verificação de assinaturas digitais ICP-Brasil (PAdES/CAdES/PKCS#7) |
-| 7 | **Classificação forense** | Atribuição de selo e geração do parecer técnico em linguagem ENFSI |
+| 1 | **Hash SHA-256** | Identidade do arquivo recebido — âncora do registro de integridade |
+| 2 | **Reputação por hash (VirusTotal)** | Se o hash consta como malicioso em base de ameaças conhecidas (só o hash é consultado; o arquivo não é enviado). Hash malicioso encerra a análise com selo AMEAÇA |
+| 3 | **Triagem** | Rejeita PDFs protegidos por senha e devolve o resultado anterior quando o mesmo arquivo já foi periciado pelo mesmo usuário |
+| 4 | **Conformidade ISO (veraPDF)** | ISO 32000 (estrutura do PDF), ISO 19005 (PDF/A) e ISO 14289 (PDF/UA) |
+| 5 | **Metadados e origem** | Extração de metadados e texto; classificação de origem (Nativo Digital, Documento Digitalizado ou Origem Não Identificada) |
+| 6 | **Elementos ativos (DetectaJS)** | Marcadores literais de JavaScript e ações automáticas no binário do PDF |
+| 7 | **Análise estática de malware (peepdf-3)** | Inspeção estrutural de objetos e streams em busca de indicadores de código malicioso |
+| 8 | **Assinaturas digitais (pyHanko)** | Integridade criptográfica, modificação posterior à assinatura e revogação do certificado — só quando o documento é assinado |
+| 9 | **Parecer Técnico** | Atribuição do selo, conclusão pericial e gravação do registro de custódia |
 
-O resultado é um **parecer técnico em PDF** com hash SHA-256, carimbo de tempo, selo forense e cadeia de custódia registrada no Supabase com auditoria completa.
-
----
-
-## Sistema de Selos Forenses
-
-| Selo | Critérios | Equivalência ENFSI |
-|---|---|---|
-| 🥇 **OURO** | PDF/A válido, assinatura digital ICP-Brasil verificada, sem elementos ativos, sem edição incremental | +4 / +3 |
-| 🥈 **PRATA** | Estrutura íntegra, falhas menores de conformidade ISO, ausência de ameaças ativas | +2 / +1 |
-| 🥉 **BRONZE** | Múltiplas falhas de conformidade, elementos suspeitos não confirmados | 0 / +1 |
-| ⚠️ **IRREGULAR** | Edição incremental confirmada, metadados inconsistentes, indícios de manipulação | -1 / -2 |
-| 🚨 **AMEAÇA** | JavaScript ativo, ações automáticas maliciosas, *exploits* PDF confirmados | -3 / -4 |
-
-*Fonte: elaboração do autor, adaptado de ENFSI (2015).*
+O resultado é um **Parecer Técnico em PDF** com o hash SHA-256 do documento periciado, o selo de integridade, as não conformidades encontradas e um QR Code para verificação pública do documento pelo hash. A análise é estática: o PDF nunca é executado.
 
 ---
 
-## Integração via API REST
+## Sistema de Selos
 
-O ArchivAI é exposto como *SaaS* via API REST documentada. Consulte a documentação completa em [`docs/api.md`](docs/api.md).
+O selo é calculado por regras determinísticas, avaliadas nesta ordem:
 
-**Endpoint de verificação pública** (sem autenticação):
+| Selo | Critério |
+|---|---|
+| 🚨 **AMEAÇA** | Hash identificado como malicioso, elementos ativos ou indicadores de código malicioso detectados, ou assinatura digital inválida ou modificada após a assinatura |
+| ⚠️ **IRREGULAR** | Não conformidade com a ISO 32000 (estrutura do PDF) ou certificado de assinatura revogado |
+| 🥇 **OURO** | Conformidade com ISO 32000, ISO 19005 (PDF/A) e ISO 14289 (PDF/UA) |
+| 🥈 **PRATA** | Conformidade com ISO 32000 e com ISO 19005 ou ISO 14289 |
+| 🥉 **BRONZE** | Conformidade apenas com ISO 32000 |
 
-```bash
-curl "https://archivai.cloud/functions/v1/verify-hash?hash={sha256}"
-```
+OURO, PRATA e BRONZE expressam o grau de conformidade normativa de um documento sem indícios de comprometimento; não medem autenticidade. A ausência de conformidade com PDF/A ou PDF/UA reflete escolhas de produção do arquivo e não indica adulteração.
 
-Permite que qualquer sistema verifique a integridade de um documento pelo seu hash SHA-256.
+A conclusão pericial do Parecer segue a orientação ENFSI de linguagem: quando nada compromete o documento, afirma elevada plausibilidade de integridade; quando há elementos de comprometimento, declara que não é possível atestar a integridade.
+
+---
+
+## Verificação pública
+
+Qualquer pessoa pode verificar, sem login, se um documento consta no acervo do ArchivAI pelo seu hash SHA-256, na página [archivai.cloud/verify](https://archivai.cloud/verify) ou pelo QR Code impresso no Parecer.
+
+A API REST para integração externa está **em manutenção**. Consulte [`docs/api.md`](docs/api.md).
 
 ---
 
 ## Arquitetura
 
-A plataforma é composta por sete componentes organizados em três camadas:
-
 ```
 ┌─────────────────────────────────────────────┐
 │ CAMADA DE INTERFACE                         │
-│  Frontend (Lovable) — archivai.cloud        │
+│  Aplicação web — archivai.cloud             │
+│  Funções de backend (sessão autenticada)    │
 └─────────────────────────┬───────────────────┘
                           │
 ┌─────────────────────────▼───────────────────┐
 │ CAMADA DE PROCESSAMENTO                     │
 │  Orquestrador: n8n                          │
-│  ├── Módulo VirusTotal (API v3)             │
-│  ├── Módulo DetectaJS (Node.js)             │
-│  ├── Módulo peepdf-3 (Python)               │
-│  ├── Módulo veraPDF (Java)                  │
-│  └── Módulo pyHanko (Python/Flask)          │
+│  ├── Reputação por hash (VirusTotal API v3) │
+│  ├── Conformidade ISO (veraPDF)             │
+│  ├── Elementos ativos (DetectaJS)           │
+│  ├── Malware estático (peepdf-3)            │
+│  └── Assinaturas digitais (pyHanko)         │
 └─────────────────────────┬───────────────────┘
                           │
 ┌─────────────────────────▼───────────────────┐
 │ CAMADA DE PERSISTÊNCIA                      │
-│  Supabase (PostgreSQL)                      │
-│  ├── Row Level Security (RLS)               │
-│  ├── Auth Audit Logs                        │
-│  └── PGAudit                                │
+│  Supabase (PostgreSQL + armazenamento)      │
+│  ├── Registro de custódia por perícia       │
+│  └── Arquivo original preservado            │
 └─────────────────────────────────────────────┘
 ```
 
-Consulte a documentação detalhada dos módulos em [`docs/modules.md`](docs/modules.md).
+Os módulos peepdf-3 e pyHanko rodam em serviços internos isolados, com usuário sem privilégios, tempo máximo de execução e limite de memória. Detalhes em [`docs/modules.md`](docs/modules.md).
 
 ---
 
@@ -107,10 +104,21 @@ Consulte a documentação detalhada dos módulos em [`docs/modules.md`](docs/mod
 
 | Arquivo | Conteúdo |
 |---|---|
-| [`docs/api.md`](docs/api.md) | Referência completa da API REST |
-| [`docs/modules.md`](docs/modules.md) | Arquitetura e descrição dos módulos |
-| [`docs/custody-schema.md`](docs/custody-schema.md) | Schema da cadeia de custódia |
-| [`examples/`](examples/) | Exemplos de pareceres técnicos gerados |
+| [`docs/modules.md`](docs/modules.md) | Pipeline e descrição de cada módulo |
+| [`docs/custody-schema.md`](docs/custody-schema.md) | O que o registro de custódia guarda |
+| [`docs/api.md`](docs/api.md) | Situação da API REST e verificação pública |
+| [`examples/`](examples/) | Exemplos de perícias em documentos públicos |
+
+---
+
+## Limitações conhecidas
+
+- A classificação de origem depende de metadados declarados e do texto extraído; metadados adulterados podem levar a uma classificação incorreta.
+- Hash ausente da base de ameaças não significa arquivo seguro; por isso a análise estrutural local é sempre executada.
+- A verificação de revogação de certificados depende de acesso às listas CRL e serviços OCSP; sem acesso, o resultado é indeterminado.
+- Não há detecção de edição incremental em documentos sem assinatura digital.
+- Em PDFs do tipo Portfólio, apenas o arquivo contêiner é analisado; os anexos embutidos não são periciados individualmente.
+- Não há carimbo de tempo (RFC 3161) no Parecer; o registro de integridade é feito por hash SHA-256.
 
 ---
 
