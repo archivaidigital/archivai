@@ -1,6 +1,8 @@
 # Exemplos de Pareceres Técnicos
 
-Perícias forenses realizadas pelo ArchivAI em documentos PDF públicos de domínio público, demonstrando os diferentes selos forenses e cenários de análise. Todos os documentos são de acesso público e foram submetidos ao pipeline completo da plataforma.
+Perícias forenses realizadas pelo ArchivAI em documentos PDF de acesso público, demonstrando diferentes selos e cenários de análise. Todos os documentos foram submetidos ao pipeline completo da plataforma.
+
+> **Data das perícias:** julho de 2026. Desde então, a plataforma recebeu correções na classificação de origem e na leitura das não conformidades ISO 32000. Os resultados abaixo refletem a versão do pipeline daquela data.
 
 ---
 
@@ -26,7 +28,7 @@ Perícias forenses realizadas pelo ArchivAI em documentos PDF públicos de domí
 ### 🥈 Matterhorn Protocol 1.1 — A norma de acessibilidade que pratica o que prega
 **Protocolo:** `1ee0d4bc` | **Produtor:** Adobe InDesign 16.1 + Adobe PDF Library 15.0
 
-O Matterhorn Protocol é o modelo de conformidade para PDF/UA (ISO 14289) — a norma internacional de acessibilidade para PDFs. O documento é **conforme com PDF/UA e ISO 32000**, o que é coerente com sua especialidade: o documento de acessibilidade é, ele mesmo, acessível. A única não conformidade detectada é com PDF/A (preservação de longo prazo) — falha de identificação de versão (`pdfaid:part`) —, o que é esperado, pois PDF/A e PDF/UA são normas com objetivos distintos e o Matterhorn Protocol não se propõe a ser um documento de arquivo. Existe um equivalente para PDF/A — o **Isartor Test Suite** e o **Bavaria Test Suite**, mantidos pela PDF Association. Selo PRATA — estrutura íntegra com falha menor de preservação.
+O Matterhorn Protocol é o modelo de conformidade para PDF/UA (ISO 14289) — a norma internacional de acessibilidade para PDFs. O documento é **conforme com PDF/UA e ISO 32000**, o que é coerente com sua especialidade: o documento de acessibilidade é, ele mesmo, acessível. A única não conformidade detectada é com PDF/A (preservação de longo prazo) — falha de identificação de versão (`pdfaid:part`) —, o que é esperado, pois PDF/A e PDF/UA são normas com objetivos distintos e o Matterhorn Protocol não se propõe a ser um documento de arquivo. Existe um equivalente para PDF/A — o **Isartor Test Suite** e o **Bavaria Test Suite**, mantidos pela PDF Association. Selo PRATA — conformidade com ISO 32000 e ISO 14289, sem conformidade com ISO 19005.
 
 ---
 
@@ -62,12 +64,9 @@ Publicado em 2013, antes da vigência das normas ISO de acessibilidade amplament
 
 **Padrão identificado na amostra:** nenhum dos documentos públicos analisados é conforme com PDF/A (ISO 19005), o que é consistente com a literatura técnica — a maioria dos documentos PDF produzidos por órgãos públicos e privados não foi gerada com conformidade de preservação de longo prazo como requisito. Essa lacuna é exatamente o contexto que justifica plataformas de perícia forense como o ArchivAI.
 
-**Sobre os selos:** a ausência de conformidade ISO não implica adulteração ou comprometimento — reflete escolhas técnicas de produção. O selo BRONZE indica documento íntegro com falhas de conformidade normativa, enquanto IRREGULAR e AMEAÇA indicam evidências de comprometimento estrutural.
+**Sobre os selos:** a ausência de conformidade com PDF/A ou PDF/UA não implica adulteração — reflete escolhas técnicas de produção. O selo BRONZE indica conformidade apenas com a ISO 32000, sem indícios de comprometimento. IRREGULAR indica não conformidade com a ISO 32000 ou certificado de assinatura revogado, e AMEAÇA indica elementos ativos, indicadores de código malicioso ou assinatura inválida. Critérios completos no [README](../README.md#sistema-de-selos).
 
 
 ---
 
-> **Verificação de integridade:** qualquer um dos documentos acima pode ser verificado pelo hash SHA-256 via endpoint público:
-> ```
-> curl "https://archivai.cloud/functions/v1/verify-hash?hash={sha256_completo}"
-> ```
+> **Verificação de integridade:** qualquer um dos documentos acima pode ser verificado pelo hash SHA-256 completo na página [archivai.cloud/verify](https://archivai.cloud/verify).
