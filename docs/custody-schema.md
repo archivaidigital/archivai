@@ -36,10 +36,10 @@ Cada perícia realizada pelo ArchivAI gera um registro no banco de dados da plat
 |---|---|
 | Selo | OURO, PRATA, BRONZE, IRREGULAR ou AMEAÇA |
 | Conformidade ISO | Resultado para ISO 32000, ISO 19005 (PDF/A) e ISO 14289 (PDF/UA) |
-| Segurança | Indicação de documento seguro ou de elementos ativos e indicadores de código malicioso |
+| Segurança | Indícios de código malicioso, elementos ativos informativos e situação da análise de malware (concluída ou não) |
 | Não conformidades | Lista das regras ISO violadas |
 | Classificação | Origem do documento, detalhe técnico da classificação e base legal aplicável |
-| Alertas | Segurança, reputação por hash, anomalia de datas, assinatura digital e conclusão pericial |
+| Alertas | Segurança, reputação por hash, elementos ativos, análise de malware, anomalia de datas, assinatura digital e conclusão pericial |
 | Estado do documento | Síntese do estado de integridade apresentada no Parecer |
 | Justificativa | Texto técnico que fundamenta a conclusão |
 
@@ -49,6 +49,8 @@ Cada perícia realizada pelo ArchivAI gera um registro no banco de dados da plat
 |---|---|
 | Usuário | Identificação do usuário que solicitou a perícia |
 | Situação do processamento | Indica a conclusão da análise |
+| Versão do motor | Versão do ArchivAI que produziu a perícia (a partir da 1.0.0), exibida no Parecer |
+| Data de recebimento | Data e hora em que o registro foi gravado |
 
 ---
 

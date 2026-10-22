@@ -2,7 +2,7 @@
 
 Perícias forenses realizadas pelo ArchivAI em documentos PDF de acesso público, demonstrando diferentes selos e cenários de análise. Todos os documentos foram submetidos ao pipeline completo da plataforma.
 
-> **Data das perícias:** julho de 2026. Desde então, a plataforma recebeu correções na classificação de origem e na leitura das não conformidades ISO 32000. Os resultados abaixo refletem a versão do pipeline daquela data.
+> **Data das perícias:** julho de 2026, antes da versão 1.0.0 (22/10/2026). Desde então, a plataforma mudou a classificação de origem, a leitura das não conformidades, as regras de segurança e a verificação de assinaturas (veja a [nota da 1.0.0](../docs/versoes/v1.0.0.md)). Os resultados abaixo refletem o pipeline daquela data e podem diferir de uma perícia feita hoje.
 
 ---
 
@@ -64,7 +64,7 @@ Publicado em 2013, antes da vigência das normas ISO de acessibilidade amplament
 
 **Padrão identificado na amostra:** nenhum dos documentos públicos analisados é conforme com PDF/A (ISO 19005), o que é consistente com a literatura técnica — a maioria dos documentos PDF produzidos por órgãos públicos e privados não foi gerada com conformidade de preservação de longo prazo como requisito. Essa lacuna é exatamente o contexto que justifica plataformas de perícia forense como o ArchivAI.
 
-**Sobre os selos:** a ausência de conformidade com PDF/A ou PDF/UA não implica adulteração — reflete escolhas técnicas de produção. O selo BRONZE indica conformidade apenas com a ISO 32000, sem indícios de comprometimento. IRREGULAR indica não conformidade com a ISO 32000 ou certificado de assinatura revogado, e AMEAÇA indica elementos ativos, indicadores de código malicioso ou assinatura inválida. Critérios completos no [README](../README.md#sistema-de-selos).
+**Sobre os selos:** a ausência de conformidade com PDF/A ou PDF/UA não implica adulteração — reflete escolhas técnicas de produção. O selo BRONZE indica conformidade apenas com a ISO 32000, sem indícios de comprometimento. IRREGULAR indica não conformidade com a ISO 32000, e AMEAÇA indica indício crítico de código malicioso ou assinatura cuja integridade não confere. Critérios completos no [README](../README.md#sistema-de-selos).
 
 
 ---
