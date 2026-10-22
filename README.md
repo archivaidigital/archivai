@@ -19,7 +19,7 @@ A plataforma automatiza a análise estática forense de documentos PDF e emite u
 - **ISO/IEC 27037** — Identificação, coleta, aquisição e preservação de evidências digitais
 - **ISO/IEC 27042** — Análise e interpretação de evidências digitais
 - **NIST SP 800-86** — Integração de técnicas forenses em resposta a incidentes
-- **ENFSI** — Linguagem de conclusões periciais: plausibilidade para achados positivos, linguagem categórica para achados negativos
+- **ENFSI** — Orientação de linguagem para conclusões periciais
 
 ---
 
@@ -31,13 +31,12 @@ Para cada documento PDF submetido, o pipeline forense executa, nesta ordem:
 |---|---|---|
 | 1 | **Hash SHA-256** | Identidade do arquivo recebido — âncora do registro de integridade |
 | 2 | **Reputação por hash (VirusTotal)** | Se o hash consta como malicioso em base de ameaças conhecidas (só o hash é consultado; o arquivo não é enviado). Hash malicioso encerra a análise com selo AMEAÇA |
-| 3 | **Triagem** | Rejeita PDFs protegidos por senha e devolve o resultado anterior quando o mesmo arquivo já foi periciado pelo mesmo usuário |
+| 3 | **Triagem** | Rejeita PDFs criptografados (com senha de abertura ou restrições de uso) e devolve o resultado anterior quando o mesmo arquivo já foi periciado pelo mesmo usuário |
 | 4 | **Conformidade ISO (veraPDF)** | ISO 32000 (estrutura do PDF), ISO 19005 (PDF/A) e ISO 14289 (PDF/UA) |
 | 5 | **Metadados e origem** | Extração de metadados e texto; classificação de origem (Nativo Digital, Documento Digitalizado ou Origem Não Identificada) |
-| 6 | **Elementos ativos (DetectaJS)** | Marcadores literais de JavaScript e ações automáticas no binário do PDF |
-| 7 | **Análise estática de malware (peepdf-3)** | Inspeção estrutural de objetos e streams em busca de indicadores de código malicioso |
-| 8 | **Assinaturas digitais (pyHanko)** | Integridade criptográfica, modificação posterior à assinatura e revogação do certificado — só quando o documento é assinado |
-| 9 | **Parecer Técnico** | Atribuição do selo, conclusão pericial e gravação do registro de custódia |
+| 6 | **Análise estática de malware (peepdf-3)** | Inspeção estrutural de objetos e streams em busca de JavaScript, ações automáticas, anexos e outros indicadores de código malicioso |
+| 7 | **Assinaturas digitais (pyHanko)** | Integridade criptográfica e modificação posterior à assinatura — só quando o documento é assinado |
+| 8 | **Parecer Técnico** | Atribuição do selo, conclusão pericial e gravação do registro de custódia |
 
 O resultado é um **Parecer Técnico em PDF** com o hash SHA-256 do documento periciado, o selo de integridade, as não conformidades encontradas e um QR Code para verificação pública do documento pelo hash. A análise é estática: o PDF nunca é executado.
 
@@ -49,15 +48,19 @@ O selo é calculado por regras determinísticas, avaliadas nesta ordem:
 
 | Selo | Critério |
 |---|---|
-| 🚨 **AMEAÇA** | Hash identificado como malicioso, elementos ativos ou indicadores de código malicioso detectados, ou assinatura digital inválida ou modificada após a assinatura |
-| ⚠️ **IRREGULAR** | Não conformidade com a ISO 32000 (estrutura do PDF) ou certificado de assinatura revogado |
+| 🚨 **AMEAÇA** | Hash identificado como malicioso, indício crítico de código malicioso na análise estática, ou assinatura digital cuja integridade não confere ou que foi modificada após a assinatura |
+| ⚠️ **IRREGULAR** | Não conformidade com a ISO 32000 (estrutura do PDF) |
 | 🥇 **OURO** | Conformidade com ISO 32000, ISO 19005 (PDF/A) e ISO 14289 (PDF/UA) |
 | 🥈 **PRATA** | Conformidade com ISO 32000 e com ISO 19005 ou ISO 14289 |
 | 🥉 **BRONZE** | Conformidade apenas com ISO 32000 |
 
+Se a análise de código malicioso não puder ser concluída (por exemplo, tempo limite excedido), o selo fica limitado a BRONZE e o Parecer informa que essa análise não foi concluída.
+
+Elementos ativos sem indício de exploração, como JavaScript de abertura automática sem código malicioso conhecido, ou arquivos anexados e multimídia sem JavaScript, aparecem no Parecer como alerta informativo e não alteram o selo.
+
 OURO, PRATA e BRONZE expressam o grau de conformidade normativa de um documento sem indícios de comprometimento; não medem autenticidade. A ausência de conformidade com PDF/A ou PDF/UA reflete escolhas de produção do arquivo e não indica adulteração.
 
-A conclusão pericial do Parecer segue a orientação ENFSI de linguagem: quando nada compromete o documento, afirma elevada plausibilidade de integridade; quando há elementos de comprometimento, declara que não é possível atestar a integridade.
+A conclusão do Parecer é descritiva: quando nada compromete o documento, declara que não foram identificados indícios de conteúdo malicioso nem não conformidades com a estrutura PDF; quando há achados, descreve-os sem atribuir causa ou autoria. Em todos os casos, o resultado descreve o arquivo recebido e não atesta sua autenticidade, autoria ou validade jurídica.
 
 ---
 
@@ -83,7 +86,6 @@ A API REST para integração externa está **em manutenção**. Consulte [`docs/
 │  Orquestrador: n8n                          │
 │  ├── Reputação por hash (VirusTotal API v3) │
 │  ├── Conformidade ISO (veraPDF)             │
-│  ├── Elementos ativos (DetectaJS)           │
 │  ├── Malware estático (peepdf-3)            │
 │  └── Assinaturas digitais (pyHanko)         │
 └─────────────────────────┬───────────────────┘
@@ -107,6 +109,7 @@ Os módulos peepdf-3 e pyHanko rodam em serviços internos isolados, com usuári
 | [`docs/modules.md`](docs/modules.md) | Pipeline e descrição de cada módulo |
 | [`docs/custody-schema.md`](docs/custody-schema.md) | O que o registro de custódia guarda |
 | [`docs/api.md`](docs/api.md) | Situação da API REST e verificação pública |
+| [`docs/versoes/`](docs/versoes/) | Notas de versão do motor de perícia |
 | [`examples/`](examples/) | Exemplos de perícias em documentos públicos |
 
 ---
@@ -115,9 +118,9 @@ Os módulos peepdf-3 e pyHanko rodam em serviços internos isolados, com usuári
 
 - A classificação de origem depende de metadados declarados e do texto extraído; metadados adulterados podem levar a uma classificação incorreta.
 - Hash ausente da base de ameaças não significa arquivo seguro; por isso a análise estrutural local é sempre executada.
-- A verificação de revogação de certificados depende de acesso às listas CRL e serviços OCSP; sem acesso, o resultado é indeterminado.
+- A revogação de certificados e a conformidade com a ICP-Brasil não são verificadas; a validade jurídica de assinaturas deve ser confirmada no validador oficial do ITI ([validar.iti.gov.br](https://validar.iti.gov.br)).
 - Não há detecção de edição incremental em documentos sem assinatura digital.
-- Em PDFs do tipo Portfólio, apenas o arquivo contêiner é analisado; os anexos embutidos não são periciados individualmente.
+- Arquivos anexados ao PDF são identificados, mas não são periciados individualmente; em PDFs do tipo Portfólio, apenas o arquivo contêiner é analisado.
 - Não há carimbo de tempo (RFC 3161) no Parecer; o registro de integridade é feito por hash SHA-256.
 
 ---
