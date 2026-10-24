@@ -128,7 +128,7 @@ PDF recebido
 
 **Uso no selo:** assinatura cuja integridade não confere ou modificada após a assinatura leva ao selo AMEAÇA.
 
-**O que não é verificado:** revogação do certificado e conformidade com a ICP-Brasil. A validade jurídica da assinatura deve ser confirmada no validador oficial do ITI ([validar.iti.gov.br](https://validar.iti.gov.br)).
+**O que não é verificado:** revogação do certificado e conformidade com a ICP-Brasil. A validade jurídica da assinatura não é verificada pelo ArchivAI; recomenda-se conferi-la no validador do ITI.
 
 **Processamento local:** a validação é feita no próprio ArchivAI; o documento não é enviado a validadores externos. A verificação não substitui o validador oficial do ITI.
 

@@ -118,7 +118,7 @@ Os módulos peepdf-3 e pyHanko rodam em serviços internos isolados, com usuári
 
 - A classificação de origem depende de metadados declarados e do texto extraído; metadados adulterados podem levar a uma classificação incorreta.
 - Hash ausente da base de ameaças não significa arquivo seguro; por isso a análise estrutural local é sempre executada.
-- A revogação de certificados e a conformidade com a ICP-Brasil não são verificadas; a validade jurídica de assinaturas deve ser confirmada no validador oficial do ITI ([validar.iti.gov.br](https://validar.iti.gov.br)).
+- A revogação de certificados e a conformidade com a ICP-Brasil não são verificadas; a validade jurídica de assinaturas não é verificada pelo ArchivAI; recomenda-se conferi-la no validador do ITI.
 - Não há detecção de edição incremental em documentos sem assinatura digital.
 - Arquivos anexados ao PDF são identificados, mas não são periciados individualmente; em PDFs do tipo Portfólio, apenas o arquivo contêiner é analisado.
 - Não há carimbo de tempo (RFC 3161) no Parecer; o registro de integridade é feito por hash SHA-256.

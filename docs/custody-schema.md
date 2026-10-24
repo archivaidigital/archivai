@@ -56,7 +56,7 @@ Cada perícia realizada pelo ArchivAI gera um registro no banco de dados da plat
 
 ## Verificação pública
 
-Qualquer pessoa pode verificar se um documento consta no acervo, sem login, informando o hash SHA-256 na página [archivai.cloud/verify](https://archivai.cloud/verify) ou lendo o QR Code do Parecer. A verificação devolve a existência do registro e o selo, sem expor o conteúdo do documento nem dados do usuário.
+Qualquer pessoa pode verificar se um documento consta no acervo, sem login, informando o hash SHA-256 na página [archivai.cloud/verify](https://archivai.cloud/verify) ou lendo o QR Code do Parecer. A verificação informa se o documento está registrado, sem expor o conteúdo do documento, o nome do arquivo nem dados do usuário.
 
 ---
 
