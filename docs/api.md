@@ -13,7 +13,7 @@ Qualquer pessoa pode verificar, sem login, se um documento consta no acervo do A
 - pela página [archivai.cloud/verify](https://archivai.cloud/verify), informando o hash SHA-256 do documento;
 - pelo QR Code impresso em cada Parecer Técnico.
 
-O hash deve ter de 16 a 128 caracteres hexadecimais. A verificação informa se o documento está registrado e qual selo recebeu, sem expor o conteúdo do documento nem dados do usuário.
+O hash deve ter de 16 a 128 caracteres hexadecimais. A verificação informa se o documento está registrado, sem expor o conteúdo do documento, o nome do arquivo nem dados do usuário.
 
 ### Perícia de documentos
 
