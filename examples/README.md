@@ -8,18 +8,18 @@ Perícias forenses realizadas pelo ArchivAI em documentos PDF de acesso público
 
 ## Resultados das Perícias
 
-| Documento | Origem | Páginas | Selo | SHA-256 |
+| Documento | Origem | Páginas | Selo | Protocolo |
 |---|---|---|---|---|
-| [Matterhorn Protocol 1.1](https://pdfa.org/wp-content/uploads/2021/04/Matterhorn-Protocol-1-1.pdf) | PDF Association | — | 🥈 PRATA | `1ee0d4bc` |
-| [Resolução CNJ 469/2022](https://juslaboris.tst.jus.br/bitstream/handle/20.500.12178/205881/2022_res0469_cnj.pdf?sequence=3&isAllowed=y) | CNJ | — | 🥉 BRONZE | `1034e1cd` |
-| [CGI.br e o Marco Civil da Internet](https://www.cgi.br/media/docs/publicacoes/4/CGI-e-o-Marco-Civil.pdf) | CGI.br | — | 🥉 BRONZE | `cf652284` |
-| [Lei de Acesso à Informação — Lei 12.527/2011](https://www.gov.br/inpi/pt-br/acesso-a-informacao/dados-abertos/arquivos/documentos/diversos/Lei12.5272011DisciplinadoDireitoFundamentaldeAcessoaInformao.pdf) | INPI/Gov.br | — | 🥉 BRONZE | `8b5ac6ae` |
-| [ECA 2026 — Estatuto da Criança e do Adolescente](https://cedecarj.org.br/wp-content/uploads/2026/02/ECA2026_Miolo_1_online.pdf) | CEDECA-RJ | — | 🥉 BRONZE | `030e9c77` |
-| [e-ARQ Brasil v2 — CONARQ](https://www.gov.br/conarq/pt-br/centrais-de-conteudo/publicacoes/EARQV203MAI2022.pdf) | CONARQ/Gov.br | — | 🥉 BRONZE | `2fc80d4d` |
-| [CLT — Consolidação das Leis do Trabalho 4ª ed.](https://sindhosfilvp.com.br/wp-content/uploads/2024/06/consolidacao_leis_trabalho_4ed-atualizada.pdf) | Câmara dos Deputados | — | 🥉 BRONZE | `a092c9ac` |
-| [MoReq-Jus 2ª edição — CNJ](https://www.cnj.jus.br/wp-content/uploads/2023/10/moreq-jus-2a-edicao.pdf) | CNJ | — | 🥉 BRONZE | `ba818e67` |
-| [Constituição Federal 88 — EC91/2016 (Senado)](https://www2.senado.leg.br/bdsf/bitstream/handle/id/518231/CF88_Livro_EC91_2016.pdf) | Senado Federal | — | 🥉 BRONZE | `90f6a616` |
-| [Lei Áurea — Lei 3.353/1888](http://www12.senado.leg.br/institucional/arquivo/documentos-apenas/lei-aurea) | Senado Federal | — | 🥉 BRONZE | `bb2fff39` |
+| [Matterhorn Protocol 1.1](https://pdfa.org/wp-content/uploads/2021/04/Matterhorn-Protocol-1-1.pdf) | PDF Association | 20 | 🥈 PRATA | `1ee0d4bc` |
+| [Resolução CNJ 469/2022](https://juslaboris.tst.jus.br/bitstream/handle/20.500.12178/205881/2022_res0469_cnj.pdf?sequence=3&isAllowed=y) | CNJ | 18 | 🥉 BRONZE | `1034e1cd` |
+| [CGI.br e o Marco Civil da Internet](https://www.cgi.br/media/docs/publicacoes/4/CGI-e-o-Marco-Civil.pdf) | CGI.br | 16 | 🥉 BRONZE | `cf652284` |
+| [Lei de Acesso à Informação — Lei 12.527/2011](https://www.gov.br/inpi/pt-br/acesso-a-informacao/dados-abertos/arquivos/documentos/diversos/Lei12.5272011DisciplinadoDireitoFundamentaldeAcessoaInformao.pdf) | INPI/Gov.br | 17 | 🥉 BRONZE | `8b5ac6ae` |
+| [ECA 2026 — Estatuto da Criança e do Adolescente](https://cedecarj.org.br/wp-content/uploads/2026/02/ECA2026_Miolo_1_online.pdf) | CEDECA-RJ | 198 | 🥉 BRONZE | `030e9c77` |
+| [e-ARQ Brasil v2 — CONARQ](https://www.gov.br/conarq/pt-br/centrais-de-conteudo/publicacoes/EARQV203MAI2022.pdf) | CONARQ/Gov.br | 225 | 🥉 BRONZE | `2fc80d4d` |
+| [CLT — Consolidação das Leis do Trabalho 4ª ed.](https://sindhosfilvp.com.br/wp-content/uploads/2024/06/consolidacao_leis_trabalho_4ed-atualizada.pdf) | Câmara dos Deputados | 210 | 🥉 BRONZE | `a092c9ac` |
+| [MoReq-Jus 2ª edição — CNJ](https://www.cnj.jus.br/wp-content/uploads/2023/10/moreq-jus-2a-edicao.pdf) | CNJ | 202 | 🥉 BRONZE | `ba818e67` |
+| [Constituição Federal 88 — EC91/2016 (Senado)](https://www2.senado.leg.br/bdsf/bitstream/handle/id/518231/CF88_Livro_EC91_2016.pdf) | Senado Federal | 498 | 🥉 BRONZE | `90f6a616` |
+| [Lei Áurea — Lei 3.353/1888](http://www12.senado.leg.br/institucional/arquivo/documentos-apenas/lei-aurea) | Senado Federal | 1 | 🥉 BRONZE | `bb2fff39` |
 
 ---
 
@@ -69,4 +69,21 @@ Publicado em 2013, antes da vigência das normas ISO de acessibilidade amplament
 
 ---
 
-> **Verificação de integridade:** qualquer um dos documentos acima pode ser verificado pelo hash SHA-256 completo na página [archivai.cloud/verify](https://archivai.cloud/verify).
+## Verificação de integridade
+
+O protocolo é o início do identificador do registro da perícia. Para conferir na página [archivai.cloud/verify](https://archivai.cloud/verify), use o hash SHA-256 completo do arquivo periciado:
+
+| Documento | SHA-256 |
+|---|---|
+| Matterhorn Protocol 1.1 | `b8bf0b00fd789ef8d8548d2eeb7e83194db394d9f1be741f2d0ef1d62bff50c6` |
+| Resolução CNJ 469/2022 | `ccde2f505cb3d1d1b623a620286838196000664521e092da97a4c9fa7cde2600` |
+| CGI.br e o Marco Civil da Internet | `2e6cbd38b65e972cebd0399f18984d0f477af54518a912dedcad7f6d19e9a6d6` |
+| Lei de Acesso à Informação — Lei 12.527/2011 | `81cbadb50090e9bbcb64176fd0b8a2ae2dc8314912c4ae3c04230c72e7248007` |
+| ECA 2026 — Estatuto da Criança e do Adolescente | `07b8f70c4286dc771d0e0978640f28dadc8a50d586c231c2e94169b113826811` |
+| e-ARQ Brasil v2 — CONARQ | `8607baa454be431435c54e8171bb0c2ce9ce030643acd22b1e86d84c24caed15` |
+| CLT — Consolidação das Leis do Trabalho 4ª ed. | `e8ae69f36cad1ec96da99b38012ed549fac5297b3432057adea3edf20a3a0501` |
+| MoReq-Jus 2ª edição — CNJ | `28b47b26865082b16f544e649f3a6193cb4fd0c3ee660307911427164e5713b4` |
+| Constituição Federal 88 — EC91/2016 (Senado) | `18785e2cc23fe9116ceaa8a47047aa9e45e92eab190173d3e9d8be01057b9078` |
+| Lei Áurea — Lei 3.353/1888 | `71d6f5bcecb2a128b10945ed76986052b545e5cc753418131a4b7d35b7d7a181` |
+
+O hash identifica o arquivo exato recebido em julho de 2026. Se o documento for baixado hoje pelo link e o hash for diferente, a publicação foi alterada desde então e o registro não corresponde a essa nova versão. A verificação confirma que o hash consta no acervo; não mostra o nome do arquivo nem o resultado da perícia.
