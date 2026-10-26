@@ -68,7 +68,7 @@ A conclusão do Parecer é descritiva: quando nada compromete o documento, decla
 
 Qualquer pessoa pode verificar, sem login, se um documento consta no acervo do ArchivAI pelo seu hash SHA-256, na página [archivai.cloud/verify](https://archivai.cloud/verify) ou pelo QR Code impresso no Parecer.
 
-A API REST para integração externa está **em manutenção**. Consulte [`docs/api.md`](docs/api.md).
+A API REST para integração externa **ainda não está disponível**. Consulte [`docs/api.md`](docs/api.md).
 
 ---
 

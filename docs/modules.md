@@ -142,7 +142,7 @@ Os metadados entram como evidência complementar; quando divergem da estrutura, 
 
 **O que não é verificado:** cadeia ICP-Brasil e revogação do certificado; recomenda-se conferi-las no verificador de conformidade do ITI.
 
-**Processamento local:** a validação é feita no próprio ArchivAI; o documento não é enviado a validadores externos. A verificação não substitui o validador oficial do ITI.
+**Processamento local:** a validação é feita no próprio ArchivAI; o documento não é enviado a validadores externos. A verificação não substitui o verificador de conformidade do ITI.
 
 ---
 
