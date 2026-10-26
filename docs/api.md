@@ -1,6 +1,6 @@
 # API REST — ArchivAI
 
-> **Situação: em manutenção.** A autenticação por chave de API para integrações externas está suspensa. A geração de chaves continua disponível na plataforma, mas as chaves ainda não são aceitas pelos endpoints. Esta página será atualizada quando a API for reaberta.
+> **Situação: ainda não disponível.** A autenticação por chave de API para integrações externas não foi implementada. A geração de chaves está suspensa na plataforma, e as chaves existentes não são aceitas pelos endpoints. Esta página será atualizada quando a API estiver disponível.
 
 ---
 
@@ -26,7 +26,7 @@ A submissão de documentos e a emissão do Parecer Técnico estão disponíveis 
 | Item | Valor |
 |---|---|
 | Tamanho máximo por arquivo | 20 MB |
-| PDFs protegidos por senha | Rejeitados; remova a proteção antes de enviar |
+| PDFs criptografados (com senha de abertura ou só com restrições de uso) | Rejeitados; remova a proteção antes de enviar |
 | Envio repetido do mesmo arquivo pelo mesmo usuário | Devolve o resultado anterior, sem consumo de crédito |
 | Análise | Exclusivamente estática; o arquivo nunca é executado |
 
@@ -34,5 +34,5 @@ A submissão de documentos e a emissão do Parecer Técnico estão disponíveis 
 
 ## Trabalho futuro
 
-- Validação das chaves de API nos endpoints e reabertura da integração externa.
+- Implementação da autenticação por chave de API nos endpoints.
 - Publicação do endereço base, dos contratos de requisição e resposta e dos códigos de erro.
