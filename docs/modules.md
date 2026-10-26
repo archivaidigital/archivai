@@ -18,7 +18,7 @@ PDF recebido
 [4] veraPDF ─────────────────────────── conformidade ISO 32000 / 19005 / 14289
      │
      ▼
-[5] Metadados e origem ──────────────── classificação de origem
+[5] Estrutura, metadados e origem ───── origem e histórico do arquivo
      │
      └──► [6] peepdf-3 ──► [7] pyHanko  malware estático / assinaturas
                 │
@@ -76,23 +76,35 @@ PDF recebido
 
 ---
 
-## Módulo 5 — Metadados e classificação de origem
+## Módulo 5 — Estrutura, metadados e origem
 
-**Função:** extrair os metadados do dicionário de informações do PDF (Producer, Creator, Author, datas de criação e modificação) e o texto do documento.
+**Função:** extrair os metadados do dicionário de informações do PDF (Producer, Creator, Author, datas de criação e modificação) e o texto do documento; ler a estrutura das páginas para classificar a origem; reconstituir o histórico do arquivo. Desde a 1.1.0, a leitura da estrutura roda num serviço interno isolado, com tempo máximo de execução e limite de memória, sem executar o arquivo e sem consulta de rede.
 
-**Classificação de origem:**
+**Classificação de origem (1.1.0):** cada página é classificada pelo que desenha (amostra de até 60 páginas distribuídas pelo documento):
 
-| Origem | Critério |
+| Página | Evidência |
 |---|---|
-| **Documento Digitalizado** | Software de digitalização identificado nos metadados, ou camada de texto ausente ou mínima em documento sem sistema de autoria identificado |
-| **Nativo Digital** | Sistema de autoria identificado nos metadados, ou texto nativo em quantidade suficiente |
-| **Origem Não Identificada** | Metadados e texto insuficientes para classificar |
+| Imagem | Imagens cobrindo quase toda a página, sem texto |
+| Imagem com OCR | Página-imagem com texto invisível ou escondido sob a imagem (camada de reconhecimento de caracteres) |
+| Imagem com texto | Página-imagem com texto visível desenhado por cima |
+| Texto | Texto visível desenhado com fontes |
+| Vetorial | Sem fontes nem imagem relevante, com muitos desenhos (texto convertido em curvas) |
+
+| Origem | Critério principal |
+|---|---|
+| **Documento Digitalizado** | Páginas-imagem (com ou sem OCR), com evidência de digitalização nos metadados ou na compressão; sem essa evidência, o Parecer diz "digitalização provável" |
+| **Nativo Digital** | Maioria das páginas com texto desenhado por fontes, ou texto visível sobre imagem de fundo sem indício de digitalização |
+| **Origem Não Identificada** | Páginas-imagem geradas por programa de autoria (não há como saber se a imagem veio de digitalização), texto convertido em curvas, ou estrutura sem conteúdo reconhecido |
+
+Os metadados entram como evidência complementar; quando divergem da estrutura, o Parecer registra a divergência. Se a leitura da estrutura não for concluída, vale a regra da 1.0.0 (metadados e volume de texto), e o Parecer informa isso.
+
+**Histórico do arquivo (1.1.0):** um PDF pode guardar várias versões salvas, uma depois da outra. O Parecer informa quantas versões o arquivo guarda, quantas acrescentam ou substituem conteúdo depois da versão original, em qual versão cada assinatura foi gravada, quantos bytes vieram depois da última assinatura, dados depois do marcador de fim do arquivo e metadados gravados fora do padrão. Seções gravadas pelo próprio programa (compatibilidade e linearização) e versões que só acrescentam assinaturas não contam como edição. O histórico é descritivo e não altera o selo.
 
 **Datas:** data de criação posterior à de modificação gera alerta de anomalia; data de modificação posterior à de criação gera alerta informativo. Esses alertas não alteram o selo.
 
 **Base legal:** o Parecer compõe a base legal aplicável a partir da origem e da presença de assinatura digital.
 
-**Limitação:** metadados podem ser falsificados; a classificação descreve o que o arquivo declara e o que sua estrutura indica, não a história real do documento.
+**Limitação:** a estrutura mostra que a página é imagem, não que a imagem veio de um scanner; metadados, datas e programas podem ser falsificados. A classificação e o histórico descrevem o que o arquivo contém e declara, não a história real do documento.
 
 ---
 

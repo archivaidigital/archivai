@@ -33,7 +33,7 @@ Para cada documento PDF submetido, o pipeline forense executa, nesta ordem:
 | 2 | **Reputação por hash (VirusTotal)** | Se o hash consta como malicioso em base de ameaças conhecidas (só o hash é consultado; o arquivo não é enviado). Hash malicioso encerra a análise com selo AMEAÇA |
 | 3 | **Triagem** | Rejeita PDFs criptografados (com senha de abertura ou restrições de uso) e devolve o resultado anterior quando o mesmo arquivo já foi periciado pelo mesmo usuário |
 | 4 | **Conformidade ISO (veraPDF)** | ISO 32000 (estrutura do PDF), ISO 19005 (PDF/A) e ISO 14289 (PDF/UA) |
-| 5 | **Metadados e origem** | Extração de metadados e texto; classificação de origem (Nativo Digital, Documento Digitalizado ou Origem Não Identificada) |
+| 5 | **Estrutura, origem e histórico** | Extração de metadados e texto; leitura do que cada página desenha (texto com fontes, imagem, texto de OCR) para classificar a origem (Nativo Digital, Documento Digitalizado ou Origem Não Identificada); histórico do arquivo: versões salvas, assinaturas e dados depois do fim do arquivo (a partir da 1.1.0) |
 | 6 | **Análise estática de malware (peepdf-3)** | Inspeção estrutural de objetos e streams em busca de JavaScript, ações automáticas, anexos e outros indicadores de código malicioso |
 | 7 | **Assinaturas digitais (pyHanko)** | Integridade criptográfica e modificação posterior à assinatura — só quando o documento é assinado |
 | 8 | **Parecer Técnico** | Atribuição do selo, conclusão pericial e gravação do registro de custódia |
@@ -87,6 +87,7 @@ A API REST para integração externa está **em manutenção**. Consulte [`docs/
 │  ├── Reputação por hash (VirusTotal API v3) │
 │  ├── Conformidade ISO (veraPDF)             │
 │  ├── Malware estático (peepdf-3)            │
+│  ├── Estrutura, origem e histórico          │
 │  └── Assinaturas digitais (pyHanko)         │
 └─────────────────────────┬───────────────────┘
                           │
@@ -98,7 +99,7 @@ A API REST para integração externa está **em manutenção**. Consulte [`docs/
 └─────────────────────────────────────────────┘
 ```
 
-Os módulos peepdf-3 e pyHanko rodam em serviços internos isolados, com usuário sem privilégios, tempo máximo de execução e limite de memória. Detalhes em [`docs/modules.md`](docs/modules.md).
+Os módulos peepdf-3, pyHanko e a análise da estrutura rodam em serviços internos isolados, com usuário sem privilégios, tempo máximo de execução e limite de memória. Detalhes em [`docs/modules.md`](docs/modules.md).
 
 ---
 
@@ -116,10 +117,10 @@ Os módulos peepdf-3 e pyHanko rodam em serviços internos isolados, com usuári
 
 ## Limitações conhecidas
 
-- A classificação de origem depende de metadados declarados e do texto extraído; metadados adulterados podem levar a uma classificação incorreta.
+- A classificação de origem lê a estrutura das páginas (a partir da 1.1.0; antes, metadados e volume de texto). A estrutura mostra se a página é imagem, não se a imagem veio de um scanner: sem evidência de digitalização nos metadados ou na compressão, o Parecer diz "digitalização provável". Apresentações convertidas em imagem e passadas por OCR podem ser classificadas como digitalizadas. Em documentos longos, até 60 páginas distribuídas pelo documento são analisadas, e o Parecer informa quantas.
 - Hash ausente da base de ameaças não significa arquivo seguro; por isso a análise estrutural local é sempre executada.
 - A revogação de certificados e a conformidade com a ICP-Brasil não são verificadas; a validade jurídica de assinaturas não é verificada pelo ArchivAI; recomenda-se conferi-la no validador do ITI.
-- Não há detecção de edição incremental em documentos sem assinatura digital.
+- O histórico do arquivo (a partir da 1.1.0) mostra as versões salvas e o que foi acrescentado depois de cada assinatura, mas as datas e os programas são os declarados no próprio arquivo; o histórico não indica quem fez cada alteração nem por quê.
 - Arquivos anexados ao PDF são identificados, mas não são periciados individualmente; em PDFs do tipo Portfólio, apenas o arquivo contêiner é analisado.
 - Não há carimbo de tempo (RFC 3161) no Parecer; o registro de integridade é feito por hash SHA-256.
 
@@ -130,6 +131,8 @@ Os módulos peepdf-3 e pyHanko rodam em serviços internos isolados, com usuári
 Este projeto é objeto de estudo no artigo científico:
 
 > ALVES, Marcelo Miguel. **ArchivAI: Plataforma de Perícia Forense Digital para Análise Automatizada de Documentos PDF com Cadeia de Custódia**. Trabalho de Conclusão de Curso (Especialização em Computação Forense e Segurança da Informação) — Instituto de Pós-Graduação e Graduação IPOG. Porto Alegre, 2026.
+
+As perícias do artigo foram feitas com a versão [1.0.0](docs/versoes/v1.0.0.md). Cada Parecer informa a versão que o produziu; perícias feitas a partir de 25/10/2026 usam a [1.1.0](docs/versoes/v1.1.0.md), que muda a classificação de origem e acrescenta o histórico do arquivo.
 
 ---
 

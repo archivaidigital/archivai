@@ -39,7 +39,7 @@ Cada perícia realizada pelo ArchivAI gera um registro no banco de dados da plat
 | Segurança | Indícios de código malicioso, elementos ativos informativos e situação da análise de malware (concluída ou não) |
 | Não conformidades | Lista das regras ISO violadas |
 | Classificação | Origem do documento, detalhe técnico da classificação e base legal aplicável |
-| Alertas | Segurança, reputação por hash, elementos ativos, análise de malware, anomalia de datas, assinatura digital e conclusão pericial |
+| Alertas | Segurança, reputação por hash, elementos ativos, análise de malware, histórico do arquivo (a partir da 1.1.0), anomalia de datas, assinatura digital e conclusão pericial |
 | Estado do documento | Síntese do estado de integridade apresentada no Parecer |
 | Justificativa | Texto técnico que fundamenta a conclusão |
 
