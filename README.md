@@ -119,7 +119,7 @@ Os módulos peepdf-3, pyHanko e a análise da estrutura rodam em serviços inter
 
 - A classificação de origem lê a estrutura das páginas (a partir da 1.1.0; antes, metadados e volume de texto). A estrutura mostra se a página é imagem, não se a imagem veio de um scanner: sem evidência de digitalização nos metadados ou na compressão, o Parecer diz "digitalização provável". Apresentações convertidas em imagem e passadas por OCR podem ser classificadas como digitalizadas. Em documentos longos, até 60 páginas distribuídas pelo documento são analisadas, e o Parecer informa quantas.
 - Hash ausente da base de ameaças não significa arquivo seguro; por isso a análise estrutural local é sempre executada.
-- A revogação de certificados e a conformidade com a ICP-Brasil não são verificadas; a validade jurídica de assinaturas não é verificada pelo ArchivAI; recomenda-se conferi-la no validador do ITI.
+- A cadeia ICP-Brasil e a revogação do certificado não são verificadas pelo ArchivAI; recomenda-se conferi-las no verificador de conformidade do ITI. A validade jurídica da assinatura decorre da lei (MP nº 2.200-2/2001, art. 10), não de ferramenta de verificação.
 - O histórico do arquivo (a partir da 1.1.0) mostra as versões salvas e o que foi acrescentado depois de cada assinatura, mas as datas e os programas são os declarados no próprio arquivo; o histórico não indica quem fez cada alteração nem por quê.
 - Arquivos anexados ao PDF são identificados, mas não são periciados individualmente; em PDFs do tipo Portfólio, apenas o arquivo contêiner é analisado.
 - Não há carimbo de tempo (RFC 3161) no Parecer; o registro de integridade é feito por hash SHA-256.
