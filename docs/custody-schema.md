@@ -29,6 +29,7 @@ Cada perícia realizada pelo ArchivAI gera um registro no banco de dados da plat
 | Referência ao arquivo preservado | Localização do original no armazenamento |
 | Metadados extraídos | Dicionário de informações do PDF (Producer, Creator, Author, datas, versão, presença de assinatura e formulário) |
 | Título e resumo | Título identificado nos metadados e resumo do texto extraído |
+| Datas da perícia | Hora de recebimento do arquivo (a partir da 1.2.0) e hora de gravação do registro |
 
 ### Resultado da perícia
 
@@ -39,7 +40,7 @@ Cada perícia realizada pelo ArchivAI gera um registro no banco de dados da plat
 | Segurança | Indícios de código malicioso, elementos ativos informativos e situação da análise de malware (concluída ou não) |
 | Não conformidades | Lista das regras ISO violadas |
 | Classificação | Origem do documento, detalhe técnico da classificação e base legal aplicável |
-| Alertas | Segurança, reputação por hash, elementos ativos, análise de malware, histórico do arquivo (a partir da 1.1.0), anomalia de datas, assinatura digital e conclusão pericial |
+| Alertas | Segurança, reputação por hash (com a situação da consulta, a partir da 1.2.0), elementos ativos, análise de malware, histórico do arquivo (a partir da 1.1.0), anomalia de datas, assinatura digital e conclusão pericial |
 | Estado do documento | Síntese do estado de integridade apresentada no Parecer |
 | Justificativa | Texto técnico que fundamenta a conclusão |
 

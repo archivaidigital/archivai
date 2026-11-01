@@ -46,13 +46,15 @@ PDF recebido
 
 **Encerramento antecipado:** se ao menos um motor de análise classificar o hash como malicioso, a análise é encerrada e o resultado é registrado com selo **AMEAÇA**.
 
+**Situação da consulta (a partir da 1.2.0):** o registro diz se o hash foi consultado, se não tem registro na base ou se a consulta não foi realizada, com o motivo.
+
 **Limitação:** arquivos que nunca foram submetidos ao VirusTotal não têm registro, mesmo que sejam maliciosos. Por isso a análise estrutural local (módulo 6) é sempre executada quando o hash não é identificado como malicioso.
 
 ---
 
 ## Módulo 3 — Triagem
 
-**Documento criptografado:** PDF com senha de abertura ou com restrições de uso é rejeitado antes da análise, com orientação para remover a proteção e reenviar.
+**Documento criptografado:** PDF com senha de abertura ou com restrições de uso é rejeitado antes da análise, com orientação para remover a proteção e reenviar. A partir da 1.2.0, a criptografia é identificada pelo dicionário de criptografia no trailer ou no fluxo de referência cruzada (ISO 32000-1, 7.5.5 e 7.5.8), e não pela palavra em qualquer parte do arquivo.
 
 **Envio repetido:** se o mesmo usuário já periciou um arquivo com o mesmo hash, o resultado registrado é devolvido sem nova análise e sem consumo de crédito.
 
@@ -69,6 +71,8 @@ PDF recebido
 | ISO 14289 (PDF/UA) | Acessibilidade |
 
 **Uso no selo:** a não conformidade com a ISO 32000 leva ao selo IRREGULAR. As conformidades com ISO 19005 e ISO 14289 definem OURO, PRATA ou BRONZE.
+
+**Validação sem resultado (a partir da 1.2.0):** se o veraPDF não conclui a validação, isso não é lido como não conformidade. Sem resultado da validação estrutural, a perícia não é concluída e o crédito é devolvido; sem resultado da ISO 14289, ela aparece como "NÃO AVALIADA" e o selo é atribuído sem ela.
 
 **Não conformidades:** as regras violadas são listadas no Parecer, identificadas pela norma correspondente.
 
