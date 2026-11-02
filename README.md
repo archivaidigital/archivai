@@ -132,7 +132,7 @@ Este projeto é objeto de estudo no artigo científico:
 
 > ALVES, Marcelo Miguel. **ArchivAI: Plataforma de Perícia Forense Digital para Análise Automatizada de Documentos PDF com Cadeia de Custódia**. Trabalho de Conclusão de Curso (Especialização em Computação Forense e Segurança da Informação) — Instituto de Pós-Graduação e Graduação IPOG. Porto Alegre, 2026.
 
-As perícias do artigo foram feitas com a versão [1.0.0](docs/versoes/v1.0.0.md). Cada Parecer informa a versão que o produziu; perícias feitas a partir de 25/10/2026 usam a [1.1.0](docs/versoes/v1.1.0.md), que muda a classificação de origem e acrescenta o histórico do arquivo, e a partir de 31/10/2026 a [1.2.0](docs/versoes/v1.2.0.md), um pacote de correções (reputação, validador sem resultado, data de recebimento, criptografia).
+As perícias do artigo foram feitas com a versão [1.0.0](docs/versoes/v1.0.0.md). Cada Parecer informa a versão que o produziu; perícias feitas a partir de 25/10/2026 usam a [1.1.0](docs/versoes/v1.1.0.md), que muda a classificação de origem e acrescenta o histórico do arquivo, e a partir de 31/10/2026 a [1.2.0](docs/versoes/v1.2.0.md), um pacote de correções (reputação, validador sem resultado, data de recebimento, criptografia), e a partir de 02/11/2026 a [1.2.1](docs/versoes/v1.2.1.md), que mostra e compara as datas dos metadados com o fuso declarado.
 
 ---
 
