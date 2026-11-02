@@ -104,7 +104,7 @@ Os metadados entram como evidência complementar; quando divergem da estrutura, 
 
 **Histórico do arquivo (1.1.0):** um PDF pode guardar várias versões salvas, uma depois da outra. O Parecer informa quantas versões o arquivo guarda, quantas acrescentam ou substituem conteúdo depois da versão original, em qual versão cada assinatura foi gravada, quantos bytes vieram depois da última assinatura, dados depois do marcador de fim do arquivo e metadados gravados fora do padrão. Seções gravadas pelo próprio programa (compatibilidade e linearização) e versões que só acrescentam assinaturas não contam como edição. O histórico é descritivo e não altera o selo.
 
-**Datas:** data de criação posterior à de modificação gera alerta de anomalia; data de modificação posterior à de criação gera alerta informativo. Esses alertas não alteram o selo.
+**Datas:** data de criação posterior à de modificação gera alerta de anomalia; data de modificação posterior à de criação gera alerta informativo. Esses alertas não alteram o selo. A partir da 1.2.1, as datas aparecem com o fuso declarado e a comparação usa o instante, aplicando o fuso; se só uma das datas declara fuso, a comparação é indicada como aproximada.
 
 **Base legal:** o Parecer compõe a base legal aplicável a partir da origem e da presença de assinatura digital.
 
