@@ -32,8 +32,8 @@ Para cada documento PDF submetido, o pipeline forense executa, nesta ordem:
 | 1 | **Hash SHA-256** | Identidade do arquivo recebido — âncora do registro de integridade |
 | 2 | **Reputação por hash (VirusTotal)** | Se o hash consta como malicioso em base de ameaças conhecidas (só o hash é consultado; o arquivo não é enviado). Hash malicioso encerra a análise com selo AMEAÇA |
 | 3 | **Triagem** | Rejeita PDFs criptografados (com senha de abertura ou restrições de uso) e devolve o resultado anterior quando o mesmo arquivo já foi periciado pelo mesmo usuário |
-| 4 | **Conformidade ISO (veraPDF)** | ISO 32000 (estrutura do PDF), ISO 19005 (PDF/A) e ISO 14289 (PDF/UA) |
-| 5 | **Estrutura, origem e histórico** | Extração de metadados e texto; leitura do que cada página desenha (texto com fontes, imagem, texto de OCR) para classificar a origem (Nativo Digital, Documento Digitalizado ou Origem Não Identificada); histórico do arquivo: versões salvas, assinaturas e dados depois do fim do arquivo (a partir da 1.1.0) |
+| 4 | **Estrutura e conformidade ISO** | Leitura completa do arquivo (qpdf) e regras da ISO 32000 (modelo Arlington da PDF Association, a partir da 1.3.0); ISO 19005 (PDF/A) e ISO 14289 (PDF/UA) pelo veraPDF |
+| 5 | **Estrutura, origem e histórico** | Extração de metadados e texto; leitura do que cada página desenha (texto com fontes, imagem, texto de OCR) para classificar a origem (Nativo Digital, Documento Digitalizado ou Origem Não Identificada); histórico do arquivo: versões salvas, assinaturas e dados depois do fim do arquivo (a partir da 1.1.0); lista dos arquivos anexados (a partir da 1.3.0) |
 | 6 | **Análise estática de malware (peepdf-3)** | Inspeção estrutural de objetos e streams em busca de JavaScript, ações automáticas, anexos e outros indicadores de código malicioso |
 | 7 | **Assinaturas digitais (pyHanko)** | Integridade criptográfica e modificação posterior à assinatura — só quando o documento é assinado |
 | 8 | **Parecer Técnico** | Atribuição do selo, conclusão pericial e gravação do registro de custódia |
@@ -48,11 +48,13 @@ O selo é calculado por regras determinísticas, avaliadas nesta ordem:
 
 | Selo | Critério |
 |---|---|
-| 🚨 **AMEAÇA** | Hash identificado como malicioso, indício crítico de código malicioso na análise estática, ou assinatura digital cuja integridade não confere ou que foi modificada após a assinatura |
-| ⚠️ **IRREGULAR** | Não conformidade com a ISO 32000 (estrutura do PDF) |
-| 🥇 **OURO** | Conformidade com ISO 32000, ISO 19005 (PDF/A) e ISO 14289 (PDF/UA) |
-| 🥈 **PRATA** | Conformidade com ISO 32000 e com ISO 19005 ou ISO 14289 |
-| 🥉 **BRONZE** | Conformidade apenas com ISO 32000 |
+| 🚨 **AMEAÇA** | Hash identificado como malicioso, indício crítico de código malicioso na análise estática, ou assinatura digital cuja integridade não confere ou que foi modificada após a assinatura (com faixa assinada válida) |
+| ⚠️ **IRREGULAR** | Arquivo danificado (a estrutura não pode ser lida por completo) ou assinatura digital que declara uma faixa assinada inválida |
+| 🥇 **OURO** | Estrutura legível e conformidade com ISO 19005 (PDF/A) e ISO 14289 (PDF/UA) |
+| 🥈 **PRATA** | Estrutura legível e conformidade com ISO 19005 ou ISO 14289 |
+| 🥉 **BRONZE** | Estrutura legível, sem conformidade com ISO 19005 nem ISO 14289 |
+
+Critérios a partir da 1.3.0. As regras da ISO 32000 violadas são listadas no Parecer e não alteram o selo; até a 1.2.1, "ISO 32000 CONFORME" indicava apenas que o arquivo foi lido por completo (ver a [nota da 1.3.0](docs/versoes/v1.3.0.md)).
 
 Se a análise de código malicioso não puder ser concluída (por exemplo, tempo limite excedido), o selo fica limitado a BRONZE e o Parecer informa que essa análise não foi concluída.
 
@@ -60,7 +62,7 @@ Elementos ativos sem indício de exploração, como JavaScript de abertura autom
 
 OURO, PRATA e BRONZE expressam o grau de conformidade normativa de um documento sem indícios de comprometimento; não medem autenticidade. A ausência de conformidade com PDF/A ou PDF/UA reflete escolhas de produção do arquivo e não indica adulteração.
 
-A conclusão do Parecer é descritiva: quando nada compromete o documento, declara que não foram identificados indícios de conteúdo malicioso nem não conformidades com a estrutura PDF; quando há achados, descreve-os sem atribuir causa ou autoria. Em todos os casos, o resultado descreve o arquivo recebido e não atesta sua autenticidade, autoria ou validade jurídica.
+A conclusão do Parecer é descritiva: quando nada compromete o documento, declara que não foram identificados indícios de conteúdo malicioso e que a estrutura do arquivo pôde ser lida por completo; quando há achados, descreve-os sem atribuir causa ou autoria. Em todos os casos, o resultado descreve o arquivo recebido e não atesta sua autenticidade, autoria ou validade jurídica.
 
 ---
 
@@ -132,7 +134,7 @@ Este projeto é objeto de estudo no artigo científico:
 
 > ALVES, Marcelo Miguel. **ArchivAI: Plataforma de Perícia Forense Digital para Análise Automatizada de Documentos PDF com Cadeia de Custódia**. Trabalho de Conclusão de Curso (Especialização em Computação Forense e Segurança da Informação) — Instituto de Pós-Graduação e Graduação IPOG. Porto Alegre, 2026.
 
-As perícias do artigo foram feitas com a versão [1.0.0](docs/versoes/v1.0.0.md). Cada Parecer informa a versão que o produziu; perícias feitas a partir de 25/10/2026 usam a [1.1.0](docs/versoes/v1.1.0.md), que muda a classificação de origem e acrescenta o histórico do arquivo, e a partir de 31/10/2026 a [1.2.0](docs/versoes/v1.2.0.md), um pacote de correções (reputação, validador sem resultado, data de recebimento, criptografia), e a partir de 02/11/2026 a [1.2.1](docs/versoes/v1.2.1.md), que mostra e compara as datas dos metadados com o fuso declarado.
+As perícias do artigo foram feitas com a versão [1.0.0](docs/versoes/v1.0.0.md). Cada Parecer informa a versão que o produziu; perícias feitas a partir de 25/10/2026 usam a [1.1.0](docs/versoes/v1.1.0.md), que muda a classificação de origem e acrescenta o histórico do arquivo, e a partir de 31/10/2026 a [1.2.0](docs/versoes/v1.2.0.md), um pacote de correções (reputação, validador sem resultado, data de recebimento, criptografia), a partir de 02/11/2026 a [1.2.1](docs/versoes/v1.2.1.md), que mostra e compara as datas dos metadados com o fuso declarado, e a partir de 03/11/2026 a [1.3.0](docs/versoes/v1.3.0.md), que verifica as regras da ISO 32000, muda o critério do selo IRREGULAR e lista os arquivos anexados.
 
 ---
 
