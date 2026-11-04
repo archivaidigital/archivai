@@ -108,6 +108,8 @@ Os metadados entram como evidência complementar; quando divergem da estrutura, 
 
 **Histórico do arquivo (1.1.0):** um PDF pode guardar várias versões salvas, uma depois da outra. O Parecer informa quantas versões o arquivo guarda, quantas acrescentam ou substituem conteúdo depois da versão original, em qual versão cada assinatura foi gravada, quantos bytes vieram depois da última assinatura, dados depois do marcador de fim do arquivo e metadados gravados fora do padrão. Seções gravadas pelo próprio programa (compatibilidade e linearização) e versões que só acrescentam assinaturas não contam como edição. O histórico é descritivo e não altera o selo.
 
+**Metadados das imagens (1.4.0):** os metadados das imagens JPEG e JPEG 2000 (EXIF, XMP, perfil de cor) são lidos sem decodificar os pixels, na mesma amostra de páginas. O Parecer descreve a situação de cada imagem e, quando houver, software, equipamento, lente, datas e histórico de edição registrado no XMP, como indício e sem conclusão sobre autenticidade. Dados pessoais encontrados (localização, número de série do equipamento, proprietário, autor) aparecem em seção própria, só no Parecer do titular da conta, e não na verificação pública.
+
 **Arquivos anexados (1.3.0):** o Parecer lista os anexos do PDF (arquivos embutidos, anexos associados, anotações de anexo e PDF Portfólio) com nome, tamanho e hash SHA-256. Os anexos não são periciados individualmente.
 
 **Datas:** data de criação posterior à de modificação gera alerta de anomalia; data de modificação posterior à de criação gera alerta informativo. Esses alertas não alteram o selo. A partir da 1.2.1, as datas aparecem com o fuso declarado e a comparação usa o instante, aplicando o fuso; se só uma das datas declara fuso, a comparação é indicada como aproximada. A partir da 1.3.0, nesse caso, uma diferença de até 14 horas (faixa de fusos possíveis) não gera alerta de criação posterior; o Parecer mostra as duas datas.
@@ -164,7 +166,7 @@ Os metadados entram como evidência complementar; quando divergem da estrutura, 
 
 **Ordem de avaliação do selo:** AMEAÇA → IRREGULAR → OURO → PRATA → BRONZE (critérios no [README](../README.md#sistema-de-selos)). Análise de código malicioso não concluída limita o selo a BRONZE.
 
-**Conclusão pericial:** descritiva e definida pelo selo. Sem achados que comprometam o documento, declara que não foram identificados indícios de conteúdo malicioso e, a partir da 1.3.0, que a estrutura do arquivo pôde ser lida por completo; com achados, descreve-os sem atribuir causa ou autoria. O resultado descreve o arquivo recebido e não atesta autenticidade, autoria ou validade jurídica.
+**Conclusão pericial:** descritiva e definida pelo selo. Sem achados que comprometam o documento, declara que não foram identificados indícios de conteúdo malicioso e, a partir da 1.3.0, que a estrutura do arquivo pôde ser lida por completo; com achados, descreve-os sem atribuir causa ou autoria. A partir da 1.4.0, a conclusão da AMEAÇA diz o motivo: indício de conteúdo malicioso (com a recomendação de não abrir o arquivo fora de ambiente controlado), assinatura digital que não confere, ou os dois. O resultado descreve o arquivo recebido e não atesta autenticidade, autoria ou validade jurídica.
 
 **Versão:** cada registro guarda a versão do motor de perícia que o produziu, exibida no Parecer. Veja [`versoes/`](versoes/).
 
