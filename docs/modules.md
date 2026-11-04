@@ -15,7 +15,7 @@ PDF recebido
 [3] Triagem ── protegido por senha? ─── SIM ──► rejeitado
      │       └ já periciado pelo usuário? ─ SIM ──► resultado anterior
      ▼
-[4] veraPDF ─────────────────────────── conformidade ISO 32000 / 19005 / 14289
+[4] qpdf, Arlington, veraPDF ────────── estrutura, ISO 32000 / 19005 / 14289
      │
      ▼
 [5] Estrutura, metadados e origem ───── origem e histórico do arquivo
@@ -60,19 +60,23 @@ PDF recebido
 
 ---
 
-## Módulo 4 — Conformidade ISO (veraPDF)
+## Módulo 4 — Estrutura e conformidade ISO
 
-**Função:** validar o documento contra as normas ISO do formato PDF.
+**Função:** verificar se o arquivo pode ser lido por completo e validar o documento contra as normas ISO do formato PDF.
 
 | Norma | O que representa |
 |---|---|
-| ISO 32000 | Especificação do formato PDF — estrutura do arquivo |
+| ISO 32000 | Especificação do formato PDF — estrutura do arquivo (a partir da 1.3.0, regras verificadas pelo modelo Arlington da PDF Association) |
 | ISO 19005 (PDF/A) | Preservação de longo prazo |
 | ISO 14289 (PDF/UA) | Acessibilidade |
 
-**Uso no selo:** a não conformidade com a ISO 32000 leva ao selo IRREGULAR. As conformidades com ISO 19005 e ISO 14289 definem OURO, PRATA ou BRONZE.
+**Leitura da estrutura (1.3.0):** o arquivo é lido por completo com o qpdf. Arquivo danificado, que não pode ser lido por inteiro, leva ao selo IRREGULAR, com o motivo no Parecer.
 
-**Validação sem resultado (a partir da 1.2.0):** se o veraPDF não conclui a validação, isso não é lido como não conformidade. Sem resultado da validação estrutural, a perícia não é concluída e o crédito é devolvido; sem resultado da ISO 14289, ela aparece como "NÃO AVALIADA" e o selo é atribuído sem ela.
+**Regras da ISO 32000 (1.3.0):** verificadas pelo modelo Arlington, com o verificador do veraPDF. O Parecer mostra CONFORME, NÃO CONFORME com as regras violadas, ou NÃO AVALIADA com o motivo. Essas violações são informativas e não alteram o selo. Até a 1.2.1, "ISO 32000 CONFORME" indicava apenas que o veraPDF leu o arquivo até o fim: os perfis do veraPDF não trazem regras próprias da ISO 32000.
+
+**Uso no selo:** com a estrutura legível, as conformidades com ISO 19005 e ISO 14289 definem OURO, PRATA ou BRONZE.
+
+**Validação sem resultado (a partir da 1.2.0):** se o veraPDF não conclui a validação, isso não é lido como não conformidade. Sem resultado da validação estrutural, a perícia não é concluída e o crédito é devolvido; sem resultado da ISO 14289, ela aparece como "NÃO AVALIADA" e o selo é atribuído sem ela. A partir da 1.3.0, um arquivo que o veraPDF não consegue ler não interrompe a perícia: ISO 19005 e ISO 14289 aparecem como "NÃO AVALIADA", e o selo vem da leitura da estrutura.
 
 **Não conformidades:** as regras violadas são listadas no Parecer, identificadas pela norma correspondente.
 
@@ -104,7 +108,9 @@ Os metadados entram como evidência complementar; quando divergem da estrutura, 
 
 **Histórico do arquivo (1.1.0):** um PDF pode guardar várias versões salvas, uma depois da outra. O Parecer informa quantas versões o arquivo guarda, quantas acrescentam ou substituem conteúdo depois da versão original, em qual versão cada assinatura foi gravada, quantos bytes vieram depois da última assinatura, dados depois do marcador de fim do arquivo e metadados gravados fora do padrão. Seções gravadas pelo próprio programa (compatibilidade e linearização) e versões que só acrescentam assinaturas não contam como edição. O histórico é descritivo e não altera o selo.
 
-**Datas:** data de criação posterior à de modificação gera alerta de anomalia; data de modificação posterior à de criação gera alerta informativo. Esses alertas não alteram o selo. A partir da 1.2.1, as datas aparecem com o fuso declarado e a comparação usa o instante, aplicando o fuso; se só uma das datas declara fuso, a comparação é indicada como aproximada.
+**Arquivos anexados (1.3.0):** o Parecer lista os anexos do PDF (arquivos embutidos, anexos associados, anotações de anexo e PDF Portfólio) com nome, tamanho e hash SHA-256. Os anexos não são periciados individualmente.
+
+**Datas:** data de criação posterior à de modificação gera alerta de anomalia; data de modificação posterior à de criação gera alerta informativo. Esses alertas não alteram o selo. A partir da 1.2.1, as datas aparecem com o fuso declarado e a comparação usa o instante, aplicando o fuso; se só uma das datas declara fuso, a comparação é indicada como aproximada. A partir da 1.3.0, nesse caso, uma diferença de até 14 horas (faixa de fusos possíveis) não gera alerta de criação posterior; o Parecer mostra as duas datas.
 
 **Base legal:** o Parecer compõe a base legal aplicável a partir da origem e da presença de assinatura digital.
 
@@ -142,7 +148,7 @@ Os metadados entram como evidência complementar; quando divergem da estrutura, 
 2. **Modificação posterior à assinatura** — identifica alterações feitas no arquivo depois de assinado.
 3. **Signatário e certificado** — extrai a identificação do signatário, a autoridade certificadora e a validade **declaradas** no certificado.
 
-**Uso no selo:** assinatura cuja integridade não confere ou modificada após a assinatura leva ao selo AMEAÇA.
+**Uso no selo:** assinatura cuja integridade não confere ou modificada após a assinatura leva ao selo AMEAÇA. A partir da 1.3.0, assinatura que declara uma faixa assinada inválida (`/ByteRange` além do fim do arquivo, sobreposto ou fora de ordem) leva ao selo IRREGULAR: indica arquivo malformado, não necessariamente adulteração, e o Parecer diz que a integridade não pôde ser verificada.
 
 **O que não é verificado:** cadeia ICP-Brasil e revogação do certificado; recomenda-se conferi-las no verificador de conformidade do ITI.
 
@@ -158,7 +164,7 @@ Os metadados entram como evidência complementar; quando divergem da estrutura, 
 
 **Ordem de avaliação do selo:** AMEAÇA → IRREGULAR → OURO → PRATA → BRONZE (critérios no [README](../README.md#sistema-de-selos)). Análise de código malicioso não concluída limita o selo a BRONZE.
 
-**Conclusão pericial:** descritiva e definida pelo selo. Sem achados que comprometam o documento, declara que não foram identificados indícios de conteúdo malicioso nem não conformidades com a estrutura PDF; com achados, descreve-os sem atribuir causa ou autoria. O resultado descreve o arquivo recebido e não atesta autenticidade, autoria ou validade jurídica.
+**Conclusão pericial:** descritiva e definida pelo selo. Sem achados que comprometam o documento, declara que não foram identificados indícios de conteúdo malicioso e, a partir da 1.3.0, que a estrutura do arquivo pôde ser lida por completo; com achados, descreve-os sem atribuir causa ou autoria. O resultado descreve o arquivo recebido e não atesta autenticidade, autoria ou validade jurídica.
 
 **Versão:** cada registro guarda a versão do motor de perícia que o produziu, exibida no Parecer. Veja [`versoes/`](versoes/).
 
