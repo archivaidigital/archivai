@@ -74,6 +74,19 @@ A API REST para integração externa **ainda não está disponível**. Consulte 
 
 ---
 
+## Ferramentas gratuitas
+
+Em [archivai.cloud/ferramentas](https://archivai.cloud/ferramentas), sem cadastro. O PDF é lido no próprio navegador de quem usa: o arquivo não é enviado ao ArchivAI e nada fica guardado. As ferramentas não são perícia e não emitem Parecer Técnico.
+
+| Ferramenta | O que faz | O que não faz |
+|---|---|---|
+| **Verificador de texto oculto** | Mostra texto que não aparece na tela (invisível, em tamanho mínimo, branco sem fundo, fora da página, em camada ou comentário oculto, nos metadados) e marca instruções dirigidas a sistemas de inteligência artificial | Não conclui sobre intenção ou autoria; há usos legítimos de texto oculto |
+| **Verificador de boleto** | Confere os dígitos verificadores da linha digitável e se o banco, o valor e o vencimento que o código carrega são os mesmos impressos no boleto; mostra se o arquivo foi salvo de novo depois de gerado | Não consulta bancos e não identifica o beneficiário: um boleto falso bem feito pode passar. Antes de pagar, confira o nome e o CPF ou CNPJ do beneficiário no aplicativo do banco |
+
+O uso segue o item 7 dos [Termos de Uso](https://archivai.cloud/termos).
+
+---
+
 ## Arquitetura
 
 ```
