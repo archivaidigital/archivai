@@ -153,7 +153,7 @@ As perícias do artigo foram feitas com a versão [1.0.0](docs/versoes/v1.0.0.md
 
 ## Licença
 
-O código-fonte do ArchivAI é **proprietário**. Este repositório contém exclusivamente documentação pública. Todos os direitos reservados © 2024–2026 Marcelo Miguel Alves.
+O código-fonte do ArchivAI é **proprietário**. Este repositório contém exclusivamente documentação pública. Todos os direitos reservados © 2026 Marcelo Miguel Alves.
 
 [ArchivAI | Perícia e Integridade Digital](https://www.archivai.cloud/#como-funciona)  
 Para contato: marmalves@gmail.com  
